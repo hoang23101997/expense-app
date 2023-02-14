@@ -1,0 +1,75 @@
+.title {
+    color: rgb(94, 54, 194);
+    text-align: center;
+}
+.btn.btn-success.active {
+    display: none;
+}
+
+.btn.btn-success {
+    margin: 0 auto;
+    display: block;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.input-form {
+    margin-top: 20px;
+}
+.list-container {
+    margin-top: 30px;
+    background-color: rgb(94, 54, 194);
+    padding: 30px;
+    border-radius: 10px;
+}
+.expense-container{
+    background-color: green;
+    display: flex;
+    border-radius: 10px;
+    padding: 10px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.expense-date {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    background-color: rgb(94, 54, 194);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid white;
+}
+.expense-date-year {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+.expense-date-month {
+    font-size: 14px;
+}
+.expense-date-day {
+    font-size: 20px;
+    font-weight: bolder;
+}
+.expense-title {
+    margin-left: 30px;
+    color: white;
+    font-weight: 600;
+    font-size: 35px;
+    align-self: center;
+    flex-grow: 1;
+}
+
+.expense-amount {
+    color: white;
+    font-weight: 500;
+    font-size: 35px;
+    align-self: center;
+    width: 85px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid white;
+    background-color: rgb(94, 54, 194);
+}
