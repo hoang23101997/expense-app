@@ -26,32 +26,19 @@
     background-color: green;
     display: flex;
     border-radius: 10px;
-    padding: 10px;
+    padding: 25px;
     justify-content: space-between;
     margin-bottom: 20px;
 }
 .expense-date {
     display: flex;
-    flex-direction: column;
-    width: 100px;
     background-color: rgb(94, 54, 194);
     color: white;
     text-align: center;
     padding: 10px;
     border-radius: 10px;
     border: 1px solid white;
-}
-.expense-date-year {
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.6;
-}
-.expense-date-month {
-    font-size: 14px;
-}
-.expense-date-day {
-    font-size: 20px;
-    font-weight: bolder;
+    align-items: center;
 }
 .expense-title {
     margin-left: 30px;
@@ -65,11 +52,14 @@
 .expense-amount {
     color: white;
     font-weight: 500;
-    font-size: 35px;
+    font-size: 30px;
     align-self: center;
-    width: 85px;
-    padding: 5px;
+    width: 80px;
+    padding: 10px;
     border-radius: 10px;
     border: 1px solid white;
     background-color: rgb(94, 54, 194);
+}
+.filter-container {
+    margin-bottom: 20px;
 }

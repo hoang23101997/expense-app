@@ -1,44 +1,49 @@
-import React, { useState } from 'react'
-import './addNewExpense.css';
-
-function AddNewExpense() {
+import React, { useState } from "react";
+import "./addNewExpense.css";
+import Filter from "../filter/filter";
+function AddNewExpense(prop) {
   const [show, setShow] = React.useState(false);
-  const [name, setName] = React.useState("");
-  const [amount, setAmount] = React.useState("");
-  const [date, setDate] = React.useState("");
-  const [expenseItems, setExpenseItems] = useState ([
+  const [formValue, setFormValue] = useState({
+    name: "",
+    amount: 0,
+    date: "14 12 2022",
+  })
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(formValue)
+    prop.onSubmitNew && prop.onSubmitNew(formValue)
+  };
+  const handleChange = (event) => {
+    const fieldName = event.target.name;
+    const value = event.target.value;
+    setFormValue ({
+      ...formValue,
+      [fieldName]: value
+    })
+  };
+  const expenseItemsData = [
     {
       id: 1,
       title: "Some Books",
-      year: "2022",
-      month: "January",
-      date: "16",
-      amount: 50
+      date: "14-12-2022",
+      amount: 50,
     },
     {
       id: 2,
       title: "Electricity Bill",
-      year: "2022",
-      month: "October",
-      date: "10",
-      amount: 75
-    }
-  ]);
-  const [addExpenseItems, setAddExpenseItems] = useState ([])
-  
+      date: "10-12-2022",
+      amount: 75,
+    },
+  ]
+  const [expenseItems, setExpenseItems] = useState(expenseItemsData);
+
+  const handleExpense = (item) => {
+    setExpenseItems([item, ...expenseItems])
+   
+  }
+
   let toogleclassNameCheck = show ? "active" : null;
-  const onNameChange = (event) => {
-    setName(event.target.value)
-  }
-  const onAmountChange = (event) => {
-    setAmount(event.target.value)
-  }
-  const onDateChange = (event) => {
-    setDate(event.target.value)
-  }
-  const addExpense = (event) => {
-    console.log (name, amount, date)
-  }
+
   return (
     <div className="container">
       <div direction="horizontal" gap="2" className="mb-4">
@@ -46,12 +51,12 @@ function AddNewExpense() {
       </div>
       <button
         className={`btn btn-success ${toogleclassNameCheck}`}
-        onClick={() => setShow(!show)}
+        onClick={() => setShow(true)}
       >
         Add new expense
       </button>
       {show ? (
-        <div className="input-form">
+        <form className="input-form" onSubmitNew ={handleExpense} >
           <div className="mb-3">
             <label className="name">Name</label>
             <input
@@ -59,9 +64,9 @@ function AddNewExpense() {
               className="form-control"
               id="exampleFormControlInput1"
               placeholder="Enter name here ..."
-              onChange={onNameChange}
-              value={name}
-              
+              value={formValue.name}
+              onChange ={handleChange}
+              name ="name"
             ></input>
           </div>
           <div className="mb-3">
@@ -71,9 +76,9 @@ function AddNewExpense() {
               className="form-control"
               id="exampleFormControlInput1"
               placeholder="Enter amount here ..."
-              onChange={onAmountChange}
-              value={amount}
-              
+              name = "amount"
+              value={formValue.amount}
+              onChange ={handleChange}
             ></input>
           </div>
           <div className="mb-3">
@@ -82,17 +87,13 @@ function AddNewExpense() {
               type="date"
               className="form-control"
               id="exampleFormControlInput1"
-              onChange={onDateChange}
-              value={date}
-              
+              name = "date"
+              value={formValue.date}
+              onChange ={handleChange}
             ></input>
           </div>
           <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button
-              className="btn btn-success me-md-2"
-              type="button"
-              onClick={()=> addExpense()}
-            >
+            <button className="btn btn-success me-md-2" type="submit" onClick={handleSubmit} >
               Add
             </button>
             <button
@@ -103,18 +104,18 @@ function AddNewExpense() {
               Cancel
             </button>
           </div>
-        </div>
+        </form>
       ) : null}
+
       <div className="list-container">
+        <div className="filter-container">
+          <Filter />
+        </div>
         {expenseItems &&
           expenseItems.map((item) => (
-            <div key = {item.id}>
+            <div key={item.id}>
               <div className="expense-container">
-                <div className="expense-date">
-                  <div className="expense-date-month">{item.month}</div>
-                  <div className="expense-date-year">{item.year}</div>
-                  <div className="expense-date-day">{item.date}</div>
-                </div>
+                <div className="expense-date">{item.date}</div>
                 <div className="expense-title"> {item.title}</div>
                 <div className="expense-amount">$ {item.amount}</div>
               </div>
@@ -125,4 +126,4 @@ function AddNewExpense() {
   );
 }
 
-export default AddNewExpense
+export default AddNewExpense;
