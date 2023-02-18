@@ -39,6 +39,7 @@
     border-radius: 10px;
     border: 1px solid white;
     align-items: center;
+    font-size: 20px;
 }
 .expense-title {
     margin-left: 30px;
@@ -52,13 +53,15 @@
 .expense-amount {
     color: white;
     font-weight: 500;
-    font-size: 30px;
+    font-size: 20px;
     align-self: center;
-    width: 80px;
+    width: 90px;
     padding: 10px;
     border-radius: 10px;
     border: 1px solid white;
     background-color: rgb(94, 54, 194);
+    display: flex;
+    justify-content: center;
 }
 .filter-container {
     margin-bottom: 20px;

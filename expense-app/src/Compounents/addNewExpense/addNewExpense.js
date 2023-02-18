@@ -1,46 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./addNewExpense.css";
 import Filter from "../filter/filter";
-function AddNewExpense(prop) {
+
+function AddNewExpense() {
   const [show, setShow] = React.useState(false);
   const [formValue, setFormValue] = useState({
     name: "",
     amount: 0,
-    date: "14 12 2022",
-  })
+    date: "",
+  });
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formValue)
-    prop.onSubmitNew && prop.onSubmitNew(formValue)
+    console.log(formValue);
+    setExpenseItems([formValue, ...expenseItems]);
+    setDisplayValue([formValue, ...expenseItems]);
   };
   const handleChange = (event) => {
     const fieldName = event.target.name;
     const value = event.target.value;
-    setFormValue ({
+    setFormValue({
       ...formValue,
-      [fieldName]: value
-    })
+      [fieldName]: value,
+    });
   };
   const expenseItemsData = [
     {
       id: 1,
-      title: "Some Books",
-      date: "14-12-2022",
+      name: "Some Books",
+      date: "2022-09-23",
       amount: 50,
     },
     {
       id: 2,
-      title: "Electricity Bill",
-      date: "10-12-2022",
+      name: "Electricity Bill",
+      date: "2021-11-13",
       amount: 75,
     },
-  ]
+    {
+      id: 3,
+      name: "Grocery",
+      date: "2020-11-13",
+      amount: 30,
+    },
+  ];
   const [expenseItems, setExpenseItems] = useState(expenseItemsData);
+  const [displayValue, setDisplayValue] = useState(expenseItemsData);
+  const [filterValue, setFilterValue] = useState("");
 
-  const handleExpense = (item) => {
-    setExpenseItems([item, ...expenseItems])
-   
-  }
+  useEffect(() => {
+    const data = expenseItems.filter((item) => {
+      if (filterValue) {
+        const date = new Date(item.date);
+        console.log(date.getFullYear(), +filterValue);
+        return date.getFullYear() === +filterValue;
+      }
+      return item;
+    });
+    setDisplayValue(data);
+  }, [expenseItems, filterValue]);
 
   let toogleclassNameCheck = show ? "active" : null;
 
@@ -56,7 +73,7 @@ function AddNewExpense(prop) {
         Add new expense
       </button>
       {show ? (
-        <form className="input-form" onSubmitNew ={handleExpense} >
+        <form className="input-form">
           <div className="mb-3">
             <label className="name">Name</label>
             <input
@@ -65,8 +82,8 @@ function AddNewExpense(prop) {
               id="exampleFormControlInput1"
               placeholder="Enter name here ..."
               value={formValue.name}
-              onChange ={handleChange}
-              name ="name"
+              onChange={handleChange}
+              name="name"
             ></input>
           </div>
           <div className="mb-3">
@@ -76,9 +93,9 @@ function AddNewExpense(prop) {
               className="form-control"
               id="exampleFormControlInput1"
               placeholder="Enter amount here ..."
-              name = "amount"
+              name="amount"
               value={formValue.amount}
-              onChange ={handleChange}
+              onChange={handleChange}
             ></input>
           </div>
           <div className="mb-3">
@@ -87,13 +104,17 @@ function AddNewExpense(prop) {
               type="date"
               className="form-control"
               id="exampleFormControlInput1"
-              name = "date"
+              name="date"
               value={formValue.date}
-              onChange ={handleChange}
+              onChange={handleChange}
             ></input>
           </div>
           <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button className="btn btn-success me-md-2" type="submit" onClick={handleSubmit} >
+            <button
+              className="btn btn-success me-md-2"
+              type="submit"
+              onClick={handleSubmit}
+            >
               Add
             </button>
             <button
@@ -109,14 +130,15 @@ function AddNewExpense(prop) {
 
       <div className="list-container">
         <div className="filter-container">
-          <Filter />
+          <Filter onFilterChange={(value) => setFilterValue(value)} />
         </div>
-        {expenseItems &&
-          expenseItems.map((item) => (
+       
+        {displayValue &&
+          displayValue.map((item) => (
             <div key={item.id}>
               <div className="expense-container">
                 <div className="expense-date">{item.date}</div>
-                <div className="expense-title"> {item.title}</div>
+                <div className="expense-title"> {item.name}</div>
                 <div className="expense-amount">$ {item.amount}</div>
               </div>
             </div>
